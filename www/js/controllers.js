@@ -1,28 +1,40 @@
-angular.module('starter.controllers', [])
+'use strict';
 
-.controller('DashCtrl', function($scope) {})
+angular.module('loo.controllers', [])
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
-})
+    .controller('LooController', function ($scope, $ionicPlatform, $settings, $media) {
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+        $scope.active = false;
 
-.controller('FriendsCtrl', function($scope, Friends) {
-  $scope.friends = Friends.all();
-})
+        $scope.play = function () {
+            if (!$scope.active) {
+                $media.play($settings.$find().data.sound.selected);
+            } else {
+                $media.stop();
+            }
+            $scope.active = !$scope.active;
+        };
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-  $scope.friend = Friends.get($stateParams.friendId);
-})
+        $ionicPlatform.ready(function () {
+            document.addEventListener("pause", function () {
+                $media.stop();
+                $scope.active = false;
+                $scope.$apply();
+            }, false);
+        });
+    })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
+    .controller('SettingsController', function ($scope, $settings) {
+
+        var model = $settings.$find();
+
+        function init() {
+            $scope.settings = model.data;
+        }
+
+        $scope.onChangeSound = function (sound) {
+            model.setData($scope.settings);
+        };
+
+        init();
+    });

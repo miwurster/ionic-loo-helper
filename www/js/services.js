@@ -1,97 +1,96 @@
-angular.module('starter.services', [])
+'use strict';
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+angular.module('loo.services', []);
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }, {
-    id: 2,
-    name: 'Andrew Jostlin',
-    lastText: 'Did you get the ice cream?',
-    face: 'https://pbs.twimg.com/profile_images/491274378181488640/Tti0fFVJ.jpeg'
-  }, {
-    id: 3,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 4,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
-  }];
+angular.module('loo.services')
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    .factory('$media', function ($cordovaMedia) {
+
+        var media = {
+            play: function () {
+            },
+            stop: function () {
+            }
+        };
+
+        return {
+            play: function (sound) {
+                if (window.Media) {
+                    media = $cordovaMedia.newMedia('/android_asset/www/media/' + sound + '.wav');
+                }
+                media.play();
+            },
+            stop: function () {
+                media.stop();
+            }
+        };
+    }
+);
+
+(function () {
+
+    function Settings(data) {
+        if (data && angular.isFunction(data.then)) {
+            this.$unwrap(data);
+            return;
         }
-      }
-      return null;
+        angular.extend(this, {data: data});
     }
-  }
-})
 
-/**
- * A simple example service that returns some data.
- */
-.factory('Friends', function() {
-  // Might use a resource here that returns a JSON array
+    Settings.$factory = function ($timeout, DSCacheFactory) {
+        angular.extend(Settings, {
+            $timeout: $timeout
+        });
 
-  // Some fake testing data
-  // Some fake testing data
-  var friends = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    notes: 'Enjoys drawing things',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    notes: 'Odd obsession with everything',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }, {
-    id: 2,
-    name: 'Andrew Jostlen',
-    notes: 'Wears a sweet leather Jacket. I\'m a bit jealous',
-    face: 'https://pbs.twimg.com/profile_images/491274378181488640/Tti0fFVJ.jpeg'
-  }, {
-    id: 3,
-    name: 'Adam Bradleyson',
-    notes: 'I think he needs to buy a boat',
-    face: 'https://pbs.twimg.com/profile_images/479090794058379264/84TKj_qa.jpeg'
-  }, {
-    id: 4,
-    name: 'Perry Governor',
-    notes: 'Just the nicest guy',
-    face: 'https://pbs.twimg.com/profile_images/491995398135767040/ie2Z_V6e.jpeg'
-  }];
+        Settings.$cache = DSCacheFactory('cache', {
+            storageMode: 'localStorage'
+        });
 
+        return Settings;
+    };
 
-  return {
-    all: function() {
-      return friends;
-    },
-    get: function(friendId) {
-      // Simple index lookup
-      return friends[friendId];
+    angular.module('loo.services').factory('$settings', Settings.$factory);
+
+    Settings.prototype.$unwrap = function (futureData) {
+        var self = this;
+        this.$futureData = futureData;
+        this.$futureData.then(function (data) {
+            Settings.$timeout(function () {
+                angular.extend(self, {data: data});
+            });
+        });
+    };
+
+    Settings.prototype.setData = function (data) {
+        this.data = data;
+        Settings.$save(data);
+    };
+
+    Settings.$find = function () {
+        var DEFAULTS = {
+            sound: {
+                selected: 'water-tap',
+                items: [
+                    {
+                        id: 0,
+                        name: 'water-tap',
+                        display_name: 'A running water-tap',
+                        file: '/android_asset/www/media/water-tap.wav'
+                    },
+                    {
+                        id: 1,
+                        name: 'shower',
+                        display_name: 'A running shower',
+                        file: '/android_asset/www/media/shower.wav'
+                    }
+                ]
+            }
+        };
+        return new Settings(Settings.$cache.get('settings') || DEFAULTS);
+    };
+
+    Settings.$save = function (data) {
+        Settings.$cache.put('settings', data);
     }
-  }
-});
+
+})();

@@ -1,0 +1,16 @@
+<ion-view view-title="Settings">
+    <ion-content>
+        <div class="list">
+            <div class="item item-divider">
+                <h2>Sound</h2>
+                <p>Choose the sound type you want to use</p>
+            </div>
+            <ion-radio ng-model="settings.sound.selected"
+                       ng-repeat="item in settings.sound.items"
+                       ng-value="item.name"
+                       ng-change="onChangeSound(item)">
+                {{ item.display_name }}
+            </ion-radio>
+        </div>
+    </ion-content>
+</ion-view>
