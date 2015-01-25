@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.ionicloohelper146987" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>ionic-loo-helper</name>
-  <description>
-        An Ionic Framework and Cordova project.
-    </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
-    </author>
-  <content src="index.html"/>
-  <access origin="*"/>
-  <preference name="webviewbounce" value="false"/>
-  <preference name="UIWebViewBounce" value="false"/>
-  <preference name="DisallowOverscroll" value="true"/>
-  <preference name="BackupWebStorage" value="none"/>
-  <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
-  </feature>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="com.miwurster.loohelper"
+        version="1.0.0">
+    <name>Loo Helper</name>
+    <description>Little helper when you are at the loo and can't make it :-)</description>
+    <author email="miwurster@googlemail.com" href="http://www.miwurster.com">Michael Wurster</author>
+    <content src="index.html"/>
+    <access origin="*"/>
+    <preference name="webviewbounce" value="false"/>
+    <preference name="UIWebViewBounce" value="false"/>
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="BackupWebStorage" value="none"/>
+    <platform name="android">
+        <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
+        <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
+        <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
+        <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi"/>
+        <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi"/>
+        <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
+    </platform>
+    <icon src="resources/icon.png"/>
 </widget>

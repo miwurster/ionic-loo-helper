@@ -7010,3 +7010,7 @@ a.button {
 
 .center-content .button {
   width: 70%; }
+
+.title-image {
+  margin-top: 8px;
+  height: 27px; }

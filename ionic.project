@@ -1,6 +1,6 @@
 {
   "name": "ionic-loo-helper",
-  "app_id": "",
+  "app_id": "cbbda9f3",
   "gulpStartupTasks": [
     "sass",
     "watch"
