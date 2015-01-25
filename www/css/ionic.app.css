@@ -7002,11 +7002,10 @@ a.button {
 .center-content {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: url(../media/718561_36070511.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  justify-content: center; }
+
+.background-cover {
+  background: url("../media/718561_36070511.jpg") no-repeat center center fixed;
   background-size: cover; }
 
 .center-content .button {
