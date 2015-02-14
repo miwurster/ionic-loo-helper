@@ -8,11 +8,11 @@ $assertive: #ef473a !default;
 $royal: #886aea !default;
 $dark: #444 !default;
 
-$ionicons-font-path: "../lib/ionic/fonts" !default;
+$ionicons-font-path: "../bower_components/ionic/fonts" !default;
 
-@import "www/lib/ionic/scss/ionic";
+@import "www/bower_components/ionic/scss/ionic";
 
-$background-cover: "../media/718561_36070511.jpg";
+$background-cover: "../images/background.jpg";
 
 .center-content {
   display: flex;
