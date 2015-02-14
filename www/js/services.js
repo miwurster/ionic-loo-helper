@@ -4,7 +4,7 @@ angular.module('loo.services', []);
 
 angular.module('loo.services')
 
-  .factory('$media', function ($cordovaMedia) {
+  .factory('$media', function ($log, $cordovaMedia) {
 
     var media = {
       play: function () {
@@ -16,7 +16,16 @@ angular.module('loo.services')
     return {
       play: function (sound) {
         if (window.Media) {
-          media = $cordovaMedia.newMedia('/android_asset/www/media/' + sound + '.wav');
+          var filename = '/android_asset/www/media/' + sound + '.mp3';
+          $log.debug('Going to play file: ' + filename);
+          media = $cordovaMedia.newMedia(filename);
+          media.then(
+            function (success) {
+            },
+            function (error) {
+              $log.error(JSON.stringify(error));
+            }
+          );
         }
         media.play();
         return media;
@@ -75,14 +84,12 @@ angular.module('loo.services')
           {
             id: 0,
             name: 'water-tap',
-            display_name: 'A running water-tap',
-            file: '/android_asset/www/media/water-tap.mp3'
+            display_name: 'A running water-tap'
           },
           {
             id: 1,
             name: 'shower',
-            display_name: 'A running shower',
-            file: '/android_asset/www/media/shower.mp3'
+            display_name: 'A running shower'
           }
         ]
       }
