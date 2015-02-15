@@ -10,6 +10,9 @@ var translations = {
         DESCRIPTION: 'You can choose which type of sound should be played.'
       }
     },
+    IONIC: {
+      BACK: 'Back'
+    },
     'water-tap': 'A running water-tap',
     'shower': 'A running shower'
   },
@@ -21,6 +24,9 @@ var translations = {
         TITLE: 'Audio Variante',
         DESCRIPTION: 'Wähle den Sound der abgespielt werden soll.'
       }
+    },
+    IONIC: {
+      BACK: 'Zurück'
     },
     'water-tap': 'Ein laufender Wasserhahn',
     'shower': 'Eine laufende Dusche'
@@ -36,15 +42,7 @@ angular.module('loo', [
   'loo.services'
 ])
 
-  .run(function ($ionicPlatform, $cordovaSplashscreen) {
-    $ionicPlatform.ready(function () {
-      if (navigator.splashscreen) {
-        $cordovaSplashscreen.hide();
-      }
-    });
-  })
-
-  .config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $ionicConfigProvider) {
     $stateProvider
       .state('loo', {
         url: '/loo',
@@ -69,4 +67,19 @@ angular.module('loo', [
       })
       .fallbackLanguage('en')
       .determinePreferredLanguage();
+    $ionicConfigProvider.backButton.previousTitleText(true);
+  })
+
+  .run(function ($ionicPlatform, $cordovaSplashscreen) {
+    $ionicPlatform.ready(function () {
+      if (navigator.splashscreen) {
+        $cordovaSplashscreen.hide();
+      }
+    });
+  })
+
+  .run(function ($filter, $ionicConfig) {
+    if (ionic.Platform.isIOS()) {
+      $ionicConfig.backButton.text($filter('translate')('IONIC.BACK'));
+    }
   });
