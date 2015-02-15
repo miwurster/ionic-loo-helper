@@ -72,7 +72,7 @@ angular.module('loo.services').factory('MediaPlayer', function ($log, $cordovaMe
 
   angular.module('loo.services').factory('OptionsRepository', function (DSCacheFactory) {
     return {
-      $$cache: DSCacheFactory('loo-helper', {
+      $$cache: new DSCacheFactory('loo-helper', {
         storageMode: 'localStorage'
       }),
       get: function () {

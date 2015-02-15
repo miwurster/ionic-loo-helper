@@ -13,7 +13,7 @@ angular.module('loo.controllers', [])
       $scope.active = !$scope.active;
     };
     $ionicPlatform.ready(function () {
-      document.addEventListener("pause", function () {
+      document.addEventListener('pause', function () {
         MediaPlayer.stop();
         $scope.active = false;
         $scope.$apply();

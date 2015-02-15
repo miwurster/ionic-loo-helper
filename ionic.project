@@ -2,10 +2,9 @@
   "name": "ionic-loo-helper",
   "app_id": "cbbda9f3",
   "gulpStartupTasks": [
-    "default",
     "watch"
   ],
   "watchPatterns": [
-    "app/**/*"
+    "www/**/*"
   ]
 }
