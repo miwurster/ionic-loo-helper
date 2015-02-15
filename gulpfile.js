@@ -1,42 +1,61 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var bower = require('bower');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
+var usemin = require('gulp-usemin');
+var uglify = require('gulp-uglify');
+var minifyHtml = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
+var rev = require('gulp-rev');
 var rename = require('gulp-rename');
+var del = require('del');
+var bower = require('bower');
 var sh = require('shelljs');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./app/scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['sass', 'usemin']);
 
-gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
+gulp.task('sass', function (done) {
+  gulp.src('./app/scss/app.scss')
     .pipe(sass())
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest('./.tmp/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(rename({extname: '.min.css'}))
+    .pipe(gulp.dest('./.tmp/css/'))
     .on('end', done);
 });
 
-gulp.task('watch', function() {
+gulp.task('usemin', ['sass'], function () {
+  return gulp.src('./app/index.html')
+    .pipe(usemin({
+      css: [/* minifyCss(), */'concat'],
+      html: [/* minifyHtml({empty: true}) */],
+      js: [/* uglify() */]
+    }))
+    .pipe(gulp.dest('./www/'));
+});
+
+gulp.task('clean', function (callback) {
+  del(['./www/'], callback);
+});
+
+gulp.task('watch', function () {
   gulp.watch(paths.sass, ['sass']);
 });
 
-gulp.task('install', ['git-check'], function() {
+gulp.task('install', ['git-check'], function () {
   return bower.commands.install()
-    .on('log', function(data) {
+    .on('log', function (data) {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
 });
 
-gulp.task('git-check', function(done) {
+gulp.task('git-check', function (done) {
   if (!sh.which('git')) {
     console.log(
       '  ' + gutil.colors.red('Git is not installed.'),
