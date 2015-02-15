@@ -32,7 +32,7 @@ gulp.task('default', [
 ]);
 
 gulp.task('clean', function () {
-  del(['./www']);
+  del(['./www', './.tmp']);
 });
 
 gulp.task('jshint', function () {
@@ -46,11 +46,11 @@ gulp.task('sass', function (done) {
   gulp.src('./app/scss/app.scss')
     .pipe(sass())
     .pipe(gulp.dest('./.tmp/css/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({extname: '.min.css'}))
-    .pipe(gulp.dest('./.tmp/css/'))
+    //.pipe(minifyCss({
+    //  keepSpecialComments: 0
+    //}))
+    //.pipe(rename({extname: '.min.css'}))
+    //.pipe(gulp.dest('./.tmp/css/'))
     .on('end', done);
 });
 
