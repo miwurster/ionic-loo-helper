@@ -32,16 +32,8 @@ angular.module('loo.services').factory('MediaPlayer', function ($log, $cordovaMe
     sound: {
       selected: 'water-tap',
       items: [
-        {
-          id: 0,
-          name: 'water-tap',
-          display_name: 'A running water-tap'
-        },
-        {
-          id: 1,
-          name: 'shower',
-          display_name: 'A running shower'
-        }
+        {id: 0, name: 'water-tap'},
+        {id: 1, name: 'shower'}
       ]
     }
   };

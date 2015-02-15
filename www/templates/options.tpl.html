@@ -1,15 +1,15 @@
-<ion-view view-title="Options">
+<ion-view view-title="{{ 'OPTIONS.TITLE' | translate }}">
   <ion-content>
     <div class="list">
       <div class="item item-divider item-text-wrap">
-        <h2><strong>Audio Type</strong></h2>
-        <p>You can choose which type of sound should be played.</p>
+        <h2><strong>{{ 'OPTIONS.AUDIO_TYPE.TITLE' | translate }}</strong></h2>
+        <p>{{ 'OPTIONS.AUDIO_TYPE.DESCRIPTION' | translate }}</p>
       </div>
       <ion-radio ng-model="options.sound.selected"
                  ng-repeat="item in options.sound.items"
                  ng-value="item.name"
                  ng-change="onChangeSound(item)">
-        {{ item.display_name }}
+        {{ item.name | translate }}
       </ion-radio>
     </div>
   </ion-content>
