@@ -26,11 +26,23 @@ $background-cover: "../images/background.jpg";
   background-size: cover;
 }
 
-.center-content .button {
-  width: 70%;
-}
-
 .title-image {
   margin-top: 8px;
   height: 27px;
+}
+
+.loo-control {
+  svg {
+    width: 250px;
+    height: 250px;
+    fill: $positive;
+  }
+  &.loo-control-play {
+
+  }
+  &.loo-control-pause {
+    svg {
+      fill: $assertive;
+    }
+  }
 }

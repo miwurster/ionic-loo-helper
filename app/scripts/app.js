@@ -42,7 +42,7 @@ angular.module('loo', [
   'loo.services'
 ])
 
-  .config(function ($stateProvider, $urlRouterProvider, $translateProvider, $ionicConfigProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $translateProvider/*, $ionicConfigProvider */) {
     $stateProvider
       .state('loo', {
         url: '/loo',
@@ -67,7 +67,7 @@ angular.module('loo', [
       })
       .fallbackLanguage('en')
       .determinePreferredLanguage();
-    $ionicConfigProvider.backButton.previousTitleText(true);
+    // $ionicConfigProvider.backButton.previousTitleText(true);
   })
 
   .run(function ($ionicPlatform, $cordovaSplashscreen) {

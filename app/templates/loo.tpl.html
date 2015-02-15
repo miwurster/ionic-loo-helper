@@ -4,9 +4,10 @@
        href="#/options"></a>
   </ion-nav-buttons>
   <ion-content class="padding center-content background-cover" scroll="false">
-    <button class="button icon button-full button-large button-positive"
-            ng-class="{'ion-ios7-pause button-assertive': active, 'ion-ios7-play': !active}"
-            ng-click="play()">
-    </button>
+    <div class="loo-control" ng-click="play()"
+         ng-class="{'loo-control-pause': active, 'loo-control-play': !active}">
+      <ng-include src="'images/ionic-play.svg'" ng-show="!active"></ng-include>
+      <ng-include src="'images/ionic-pause.svg'" ng-show="active"></ng-include>
+    </div>
   </ion-content>
 </ion-view>
