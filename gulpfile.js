@@ -30,7 +30,7 @@ gulp.task('default', [
 ]);
 
 gulp.task('clean', function () {
-  del(['./www/**/*']);
+  del(['./www']);
 });
 
 gulp.task('jshint', function () {
