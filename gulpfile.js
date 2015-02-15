@@ -58,7 +58,8 @@ gulp.task('clean', function (callback) {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(paths.sass, ['sass']);
+  // gulp.watch(paths.sass, ['sass']);
+  gulp.watch('app/**/*', ['default']);
 });
 
 gulp.task('install', ['git-check'], function () {
