@@ -3,14 +3,16 @@ var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var usemin = require('gulp-usemin');
-// var uglify = require('gulp-uglify');
-// var minifyHtml = require('gulp-minify-html');
+var uglify = require('gulp-uglify');
+var minifyHtml = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var del = require('del');
 var bower = require('bower');
 var sh = require('shelljs');
 var jshint = require('gulp-jshint');
+var templateCache = require('gulp-angular-templatecache');
+var ngAnnotate = require('gulp-ng-annotate');
 
 var paths = {
   sass: ['./app/scss/**/*.scss'],
@@ -53,18 +55,35 @@ gulp.task('sass', function (done) {
 });
 
 gulp.task('usemin', ['sass'], function () {
-  return gulp.src('./app/index.html')
+  gulp.src('./app/index.html')
     .pipe(usemin({
-      //css: [minifyCss(), 'concat'],
-      //html: [minifyHtml({empty: true})],
-      //js: [uglify()]
-      //vendorjs: [uglify()]
+      css: [minifyCss()],
+      html: [minifyHtml({empty: true})],
+      js: [ngAnnotate({
+        add: true,
+        remove: true,
+        single_quotes: true
+      })]
     }))
     .pipe(gulp.dest('./www/'));
 });
 
+gulp.task('uglify', function () {
+  gulp.src('./www/scripts/*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('./www/scripts'));
+});
+
 gulp.task('copy:templates', function () {
-  gulp.src(paths.templates, {base: 'app'})
+  gulp.src(paths.templates)
+    .pipe(minifyHtml({
+      quotes: true
+    }))
+    .pipe(templateCache({
+      'filename': 'template-cache.js',
+      'root': 'templates',
+      'module': 'loo'
+    }))
     .pipe(gulp.dest('./www'));
 });
 

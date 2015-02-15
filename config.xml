@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0"
-        id="com.miwurster.loohelper" version="1.1.0">
+        id="com.miwurster.loohelper" version="1.1.1">
   <name>Loo Helper</name>
   <description>Little helper when you are at the loo and can't make it :-)</description>
   <author email="miwurster@googlemail.com" href="http://www.miwurster.com">Michael Wurster</author>
