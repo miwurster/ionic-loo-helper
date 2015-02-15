@@ -54,7 +54,7 @@ gulp.task('copy:fonts', function () {
 });
 
 gulp.task('clean', function (callback) {
-  del(['./www/'], callback);
+  del(['./www/**/*', '!.www/.gitignore'], callback);
 });
 
 gulp.task('watch', function () {
