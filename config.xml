@@ -6,6 +6,7 @@
   <author email="miwurster@googlemail.com" href="http://www.miwurster.com">Michael Wurster</author>
   <content src="index.html"/>
   <access origin="*"/>
+  <preference name="permissions" value="none"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
