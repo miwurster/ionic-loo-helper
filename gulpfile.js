@@ -6,7 +6,6 @@ var usemin = require('gulp-usemin');
 var uglify = require('gulp-uglify');
 var minifyHtml = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
-var rev = require('gulp-rev');
 var rename = require('gulp-rename');
 var del = require('del');
 var bower = require('bower');
@@ -16,7 +15,7 @@ var paths = {
   sass: ['./app/scss/**/*.scss']
 };
 
-gulp.task('default', ['sass', 'usemin']);
+gulp.task('default', ['sass', 'usemin', 'copy', 'copy:fonts']);
 
 gulp.task('sass', function (done) {
   gulp.src('./app/scss/app.scss')
@@ -38,6 +37,20 @@ gulp.task('usemin', ['sass'], function () {
       js: [/* uglify() */]
     }))
     .pipe(gulp.dest('./www/'));
+});
+
+gulp.task('copy', function () {
+  gulp.src([
+    './app/templates/**/*',
+    './app/images/**/*',
+    './app/media/**/*'
+  ], {base: 'app'})
+    .pipe(gulp.dest('./www'));
+});
+
+gulp.task('copy:fonts', function () {
+  gulp.src(['./bower_components/ionic/fonts/*'], {base: 'bower_components'})
+    .pipe(gulp.dest('./www/bower_components'));
 });
 
 gulp.task('clean', function (callback) {
