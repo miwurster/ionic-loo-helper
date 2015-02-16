@@ -22,42 +22,33 @@ var paths = {
   fonts: ['./bower_components/ionic/fonts/*']
 };
 
-gulp.task('default', [
-  'jshint',
-  'sass',
-  'usemin',
-  'copy:templates',
-  'copy:static',
-  'copy:fonts'
-]);
+gulp.task('default', ['jshint', 'sass', 'usemin', 'copy:templates', 'copy:static', 'copy:fonts']);
+gulp.task('build', ['default']);
+gulp.task('release', ['uglify:www']);
 
 gulp.task('clean', function () {
-  del(['./www', './.tmp']);
+  return del(['./www', './.tmp']);
 });
 
 gulp.task('jshint', function () {
-  gulp.src(paths.scripts)
+  return gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('sass', function (done) {
-  gulp.src('./app/scss/app.scss')
+gulp.task('sass', function () {
+  return gulp.src('./app/scss/app.scss')
     .pipe(sass())
-    .pipe(gulp.dest('./.tmp/css/'))
-    //.pipe(minifyCss({
-    //  keepSpecialComments: 0
-    //}))
-    //.pipe(rename({extname: '.min.css'}))
-    //.pipe(gulp.dest('./.tmp/css/'))
-    .on('end', done);
+    .pipe(gulp.dest('./.tmp/css/'));
 });
 
 gulp.task('usemin', ['sass'], function () {
-  gulp.src('./app/index.html')
+  return gulp.src('./app/index.html')
     .pipe(usemin({
-      css: [minifyCss()],
+      css: [minifyCss({
+        keepSpecialComments: 0
+      })],
       html: [minifyHtml({empty: true})],
       js: [ngAnnotate({
         add: true,
@@ -68,14 +59,14 @@ gulp.task('usemin', ['sass'], function () {
     .pipe(gulp.dest('./www/'));
 });
 
-gulp.task('uglify', function () {
-  gulp.src('./www/scripts/*.js')
+gulp.task('uglify:www', function () {
+  return gulp.src('./www/scripts/*.js')
     .pipe(uglify())
     .pipe(gulp.dest('./www/scripts'));
 });
 
 gulp.task('copy:templates', function () {
-  gulp.src(paths.templates)
+  return gulp.src(paths.templates)
     .pipe(minifyHtml({
       quotes: true
     }))
@@ -88,17 +79,17 @@ gulp.task('copy:templates', function () {
 });
 
 gulp.task('copy:static', function () {
-  gulp.src(paths.static, {base: 'app'})
+  return gulp.src(paths.static, {base: 'app'})
     .pipe(gulp.dest('./www'));
 });
 
 gulp.task('copy:fonts', function () {
-  gulp.src(paths.fonts, {base: 'bower_components'})
+  return gulp.src(paths.fonts, {base: 'bower_components'})
     .pipe(gulp.dest('./www/bower_components'));
 });
 
 gulp.task('copy:sass', ['sass'], function () {
-  gulp.src('.tmp/css/app.css')
+  return gulp.src('.tmp/css/app.css')
     .pipe(gulp.dest('./www/css'));
 });
 
