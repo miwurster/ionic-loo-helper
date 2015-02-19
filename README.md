@@ -9,7 +9,7 @@ This app was built with [Ionic](http://ionicframework.com).
 ```
 npm install
 bower install
-gulp clean && gulp && gulp uglify
+gulp && gulp release
 ionic serve --lab
 ionic platform add android
 ionic run android
